@@ -131,14 +131,6 @@ html[lang="ar"] .hero-title, html[lang="zh"] .hero-title { line-height: 1.28; le
 .pills li { display: flex; align-items: center; gap: 7px; font-size: .86rem; color: #e9dcea; padding: 6px 12px; border-radius: 999px;
   background: rgba(255,255,255,.05); border: 1px solid var(--line); }
 .pills li svg { color: var(--gold); }
-.live-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-.live-row:empty, .live-row:not(:has(.live:not([hidden]))) { display: none; }
-.live { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 14px; background: rgba(128,240,214,.07);
-  border: 1px solid rgba(128,240,214,.22); font-size: .88rem; color: #d9ecea; }
-.live b { font-size: 1.15rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
-.live svg { color: var(--aqua); }
-.live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 10px var(--mint); animation: pulse 1.6s infinite; }
-
 .hero-stage { position: relative; aspect-ratio: 16 / 11; display: grid; place-items: center; min-width: 0; }
 .egg-wrap { position: absolute; inset-inline-end: -6%; top: -8%; width: 46%; aspect-ratio: 1; z-index: 0; }
 .egg { position: relative; width: 100%; animation: float 7s ease-in-out infinite; filter: drop-shadow(0 0 40px rgba(255,200,120,.45)); }
@@ -287,7 +279,7 @@ html[lang="ar"] .sec-head h2, html[lang="ar"] .final h2 { line-height: 1.35; }
   .hero-inner { grid-template-columns: 1fr; text-align: center; }
   .hero-copy { display: grid; justify-items: center; }
   .hero-sub { margin-inline: auto; }
-  .hero-ctas, .pills, .live-row { justify-content: center; }
+  .hero-ctas, .pills { justify-content: center; }
   .hero-stage { max-width: 640px; width: 100%; margin: 6px auto 0; }
   .modes { grid-template-columns: repeat(2, 1fr); }
   .mode.big { grid-column: span 2; }
@@ -357,7 +349,7 @@ html[dir="rtl"] .swipe-hint > svg { animation-name: nudge-rtl; }
   .hero { min-height: auto; padding-top: 70px; }
   .hero-inner { grid-template-columns: 1.1fr 1fr; text-align: start; }
   .hero-copy { display: block; }
-  .hero-ctas, .pills, .live-row { justify-content: flex-start; }
+  .hero-ctas, .pills { justify-content: flex-start; }
   .hero-ctas { flex-direction: row; width: auto; }
   .hero-ctas .gp-badge, .hero-ctas .btn { width: auto; }
   .hero-icon { display: none; }

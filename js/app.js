@@ -1,4 +1,4 @@
-/* NUR site: language, motion, the living swarm and the live counters. */
+/* NUR site: language, motion, music and the living swarm. */
 (() => {
   "use strict";
   const PLAY_URL = "https://play.google.com/store/apps/details?id=com.nur.journeyoflight";
@@ -164,17 +164,9 @@
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add("in");
-      e.target.querySelectorAll?.(".count").forEach(countUp);
       io.unobserve(e.target);
     }), { threshold: 0.14 });
     $$(".reveal").forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; io.observe(el); });
-  }
-  function countUp(el) {
-    const end = +el.dataset.count || 0;
-    if (reduced || end === 0) { el.textContent = end.toLocaleString(lang); return; }
-    const t0 = performance.now(), dur = 1600;
-    const step = (now) => { const k = Math.min(1, (now - t0) / dur); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))).toLocaleString(lang); if (k < 1) requestAnimationFrame(step); };
-    requestAnimationFrame(step);
   }
   function wireTilt() {
     if (reduced || matchMedia("(hover: none)").matches) return;
@@ -187,36 +179,14 @@
       el.addEventListener("pointerleave", () => { el.style.transform = ""; });
     });
   }
-  // ------------------------------------------------------------ Play links & stats
+  // ------------------------------------------------------------ Play links
   function toast(msg) { const el = $("#toast"); el.textContent = msg; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 2200); }
   function wirePlayLinks() {
     $$(".play-link").forEach((a) => {
       a.href = PLAY_URL; a.target = "_blank"; a.rel = "noopener";
-      a.addEventListener("click", () => { toast(t("toast_play")); track("download"); });
+      a.addEventListener("click", () => { toast(t("toast_play")); });
     });
   }
-  async function track(event) {
-    try { await fetch(`/api/stats?event=${event}`, { method: "POST", keepalive: true }); } catch { /* offline or not deployed */ }
-  }
-  async function loadStats() {
-    // A visit counts once a day per browser; the download count is real taps
-    // on "Get it on Google Play". Installs come from the owner's own Play
-    // Console number (an env var), shown only when set.
-    const today = new Date().toISOString().slice(0, 10);
-    const first = store.get("nur_visit") !== today;
-    if (first) store.set("nur_visit", today);
-    try {
-      const res = await fetch(`/api/stats${first ? "?event=visit" : ""}`, { method: first ? "POST" : "GET" });
-      if (!res.ok) return;
-      const s = await res.json();
-      if (!s.enabled) return;
-      const show = (id, v) => { const box = $(id); box.hidden = false; const b = box.querySelector(".count"); b.dataset.count = v; countUp(b); };
-      show("#statVisitors", s.visits || 0);
-      show("#statDownloads", s.downloads || 0);
-      if (s.installs) { $("#statInstalls").hidden = false; $("#installsValue").textContent = s.installs; }
-    } catch { /* the static preview has no API */ }
-  }
-
   // ------------------------------------------------------------ music
   // The game's own menu theme. Browsers only allow sound after a tap, so it
   // starts on the visitor's first tap or key press (unless they turned it off
@@ -332,7 +302,7 @@
     $("#year").textContent = new Date().getFullYear();
     buildLangMenu(); music.init(); wireModals(); wireChrome(); wirePlayLinks();
     applyLang(lang, false);
-    wireReveal(); wireTilt(); wireModes(); wireModeClips(); swarm(); loadStats();
+    wireReveal(); wireTilt(); wireModes(); wireModeClips(); swarm();
     // Keep the hero film light: pause it while it is off screen.
     const v = $("#heroVideo");
     if (reduced) v.pause();
