@@ -50,6 +50,7 @@ window.NUR_I18N = {
     toast_play: "Opening Google Play…", lang_label: "Language", close: "Close", prev: "Previous", next: "Next",
     badge_top: "GET IT ON", plan_once: "one-time", price_note: "Google Play shows the price in your currency.", both_include: "Both include", swipe: "Swipe to see all six",
     music_label: "Music",
+    real_play: "Real gameplay",
   },
   ar: {
     meta_title: "نور: رحلة النور — سباق الملايين نحو شرارة الحياة",
@@ -91,6 +92,7 @@ window.NUR_I18N = {
     toast_play: "جارٍ فتح Google Play…", lang_label: "اللغة", close: "إغلاق", prev: "السابق", next: "التالي",
     badge_top: "احصل عليه من", plan_once: "مرة واحدة", price_note: "يعرض Google Play السعر بعملتك.", both_include: "في النسختين", swipe: "اسحب لترى الستة",
     music_label: "الموسيقى",
+    real_play: "لعب حقيقي",
   },
   de: {
     meta_title: "NUR: Reise des Lichts — das Rennen von Millionen zum Funken des Lebens",
@@ -132,6 +134,7 @@ window.NUR_I18N = {
     toast_play: "Google Play wird geöffnet…", lang_label: "Sprache", close: "Schließen", prev: "Zurück", next: "Weiter",
     badge_top: "JETZT BEI", plan_once: "einmalig", price_note: "Google Play zeigt den Preis in deiner Währung.", both_include: "In beiden enthalten", swipe: "Wischen, um alle sechs zu sehen",
     music_label: "Musik",
+    real_play: "Echtes Gameplay",
   },
   es: {
     meta_title: "NUR: Viaje de Luz — la carrera de millones hacia la chispa de la vida",
@@ -173,6 +176,7 @@ window.NUR_I18N = {
     toast_play: "Abriendo Google Play…", lang_label: "Idioma", close: "Cerrar", prev: "Anterior", next: "Siguiente",
     badge_top: "DISPONIBLE EN", plan_once: "pago único", price_note: "Google Play muestra el precio en tu moneda.", both_include: "Ambas incluyen", swipe: "Desliza para ver los seis",
     music_label: "Música",
+    real_play: "Juego real",
   },
   fr: {
     meta_title: "NUR : Voyage de Lumière — la course de millions vers l’étincelle de la vie",
@@ -214,6 +218,7 @@ window.NUR_I18N = {
     toast_play: "Ouverture de Google Play…", lang_label: "Langue", close: "Fermer", prev: "Précédent", next: "Suivant",
     badge_top: "DISPONIBLE SUR", plan_once: "paiement unique", price_note: "Google Play affiche le prix dans ta devise.", both_include: "Inclus dans les deux", swipe: "Fais glisser pour voir les six",
     music_label: "Musique",
+    real_play: "Vrai gameplay",
   },
   pt: {
     meta_title: "NUR: Jornada da Luz — a corrida de milhões até a centelha da vida",
@@ -255,6 +260,7 @@ window.NUR_I18N = {
     toast_play: "Abrindo o Google Play…", lang_label: "Idioma", close: "Fechar", prev: "Anterior", next: "Próximo",
     badge_top: "DISPONÍVEL NO", plan_once: "pagamento único", price_note: "O Google Play mostra o preço na sua moeda.", both_include: "Ambas incluem", swipe: "Deslize para ver os seis",
     music_label: "Música",
+    real_play: "Jogo real",
   },
   zh: {
     meta_title: "NUR：光之旅 —— 亿万选手奔向生命的火花",
@@ -296,5 +302,6 @@ window.NUR_I18N = {
     toast_play: "正在打开 Google Play…", lang_label: "语言", close: "关闭", prev: "上一张", next: "下一张",
     badge_top: "下载应用，请到", plan_once: "一次性购买", price_note: "Google Play 会以你的货币显示价格。", both_include: "两个版本都包含", swipe: "滑动查看全部六种",
     music_label: "音乐",
+    real_play: "真实游戏画面",
   },
 };

@@ -168,6 +168,43 @@
     };
     track.addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true }); mark();
   }
+  function wireModeClips() {
+    // Real gameplay on every mode card. With a mouse: plays while the pointer
+    // is over the card. On touch screens: the card most in view plays by
+    // itself (one at a time); a tap pauses or resumes it.
+    const cards = $$(".mode");
+    const vid = (c) => c.querySelector(".mode-vid");
+    const play = (c) => {
+      const v = vid(c);
+      if (!v.src) { v.src = v.dataset.src; v.load(); }
+      v.play().then(() => c.classList.add("playing")).catch(() => {});
+    };
+    const stop = (c) => { c.classList.remove("playing"); vid(c).pause(); };
+    if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      cards.forEach((c) => {
+        c.addEventListener("pointerenter", () => play(c));
+        c.addEventListener("pointerleave", () => stop(c));
+      });
+      return;
+    }
+    if (reduced) {
+      cards.forEach((c) => c.addEventListener("click", () => (vid(c).paused ? play(c) : stop(c))));
+      return;
+    }
+    const seen = new Map();
+    let paused = new Set();
+    const pick = () => {
+      let best = null, bestK = 0.55;
+      seen.forEach((k, c) => { if (k > bestK && !paused.has(c)) { bestK = k; best = c; } });
+      cards.forEach((c) => (c === best ? play(c) : stop(c)));
+    };
+    const io = new IntersectionObserver((es) => { es.forEach((e) => seen.set(e.target, e.intersectionRatio)); pick(); },
+      { threshold: [0, 0.3, 0.55, 0.75, 0.95] });
+    cards.forEach((c) => {
+      io.observe(c);
+      c.addEventListener("click", () => { paused.has(c) ? paused.delete(c) : paused.add(c); pick(); });
+    });
+  }
   function wireReveal() {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (!e.isIntersecting) return;
@@ -340,7 +377,7 @@
     $("#year").textContent = new Date().getFullYear();
     buildLangMenu(); music.init(); wireGallery(); wireModals(); wireChrome(); wirePlayLinks();
     applyLang(lang, false);
-    wireReveal(); wireTilt(); wireModes(); swarm(); loadStats();
+    wireReveal(); wireTilt(); wireModes(); wireModeClips(); swarm(); loadStats();
     // Keep the hero film light: pause it while it is off screen.
     const v = $("#heroVideo");
     if (reduced) v.pause();
