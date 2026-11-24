@@ -240,23 +240,6 @@ html[lang="ar"] .sec-head h2, html[lang="ar"] .final h2 { line-height: 1.35; }
 .price-keep svg { color: var(--gold); }
 .price-note { margin: 0; color: var(--muted); font-size: .85rem; }
 
-/* ---------- gallery ---------- */
-.gallery { position: relative; }
-.g-track { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10px 4px 24px; scrollbar-width: none; scroll-behavior: smooth; overscroll-behavior-x: contain; }
-.g-track::-webkit-scrollbar { display: none; }
-.g-item { flex: 0 0 min(78%, 760px); scroll-snap-align: center; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); background: #140816;
-  box-shadow: var(--shadow); cursor: zoom-in; transition: transform .4s, opacity .4s; opacity: .55; transform: scale(.94); padding: 0; }
-.g-item.current { opacity: 1; transform: none; }
-.g-item img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
-.g-arrow { position: absolute; top: 50%; z-index: 2; width: 52px; height: 52px; margin-top: -38px; border-radius: 50%; display: grid; place-items: center;
-  background: rgba(20, 8, 24, .8); border: 1px solid var(--line); backdrop-filter: blur(10px); transition: .2s; }
-.g-arrow:hover { background: var(--gold); color: #2a1206; }
-.g-arrow.prev { inset-inline-start: 8px; } .g-arrow.next { inset-inline-end: 8px; }
-html[dir="rtl"] .g-arrow svg { transform: scaleX(-1); }
-.g-dots { display: flex; justify-content: center; gap: 8px; }
-.g-dots button { width: 9px; height: 9px; border-radius: 999px; border: 0; background: rgba(255,255,255,.25); padding: 0; transition: .3s; }
-.g-dots button.on { width: 28px; background: var(--gold); }
-
 /* ---------- faq ---------- */
 .faq { max-width: 860px; margin: 0 auto; display: grid; gap: 10px; }
 .qa { border-radius: 18px; background: var(--panel); border: 1px solid var(--line); overflow: hidden; transition: border-color .3s; }
@@ -337,9 +320,6 @@ html[dir="rtl"] .g-arrow svg { transform: scaleX(-1); }
   .plans { grid-template-columns: 1fr; gap: 26px; }
   .plan.full { order: -1; }
   .both > b { width: 100%; text-align: center; margin: 0; }
-
-  .g-item { flex-basis: 90%; border-radius: 16px; }
-  .g-arrow { display: none; }
 
   .footer { flex-direction: column; text-align: center; justify-content: center; padding-bottom: calc(100px + var(--safe-b)); }
   .foot-small { text-align: center; }

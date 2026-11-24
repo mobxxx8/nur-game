@@ -4,8 +4,6 @@
   const PLAY_URL = "https://play.google.com/store/apps/details?id=com.nur.journeyoflight";
   const LANGS = window.NUR_LANGS;
   const I18N = window.NUR_I18N;
-  const SHOT_LANG = { en: "en", ar: "ar", de: "de", es: "es", fr: "fr", pt: "pt_BR", zh: "zh_CN" };
-  const SHOTS = ["01_race", "02_royale", "03_cell_wars", "04_rush", "05_breach", "06_world_board", "07_arena", "08_home"];
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -40,7 +38,7 @@
     document.title = t("meta_title");
     $("#langName").textContent = info.name;
     $$("#langMenu button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.lang === lang)));
-    buildCompare(); buildFaq(); buildGallery();
+    buildCompare(); buildFaq();
     if (window.lucide) lucide.createIcons();
   }
 
@@ -82,58 +80,15 @@
       `<details class="qa reveal in"><summary><span>${t("q" + n)}</span><span class="pm"><i data-lucide="plus"></i></span></summary><p>${t("a" + n)}</p></details>`).join("");
   }
 
-  // ------------------------------------------------------------ gallery
-  let current = 0;
-  function buildGallery() {
-    const track = $("#gTrack");
-    const dir = SHOT_LANG[lang] || "en";
-    track.innerHTML = SHOTS.map((s, i) =>
-      `<button class="g-item" data-i="${i}" type="button"><img src="/assets/shots/${dir}/${s}.webp" alt="NUR screenshot ${i + 1}" loading="lazy" width="1280" height="720"></button>`).join("");
-    $("#gDots").innerHTML = SHOTS.map((_, i) => `<button type="button" aria-label="${i + 1}" data-i="${i}"></button>`).join("");
-    $$(".g-item", track).forEach((b) => b.addEventListener("click", () => openLightbox(b.querySelector("img").src)));
-    $$("#gDots button").forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.i)));
-    markCurrent(0);
-  }
-  function goTo(i) {
-    const items = $$(".g-item");
-    current = (i + items.length) % items.length;
-    const el = items[current];
-    const track = $("#gTrack");
-    track.scrollTo({ left: el.offsetLeft - (track.clientWidth - el.clientWidth) / 2, behavior: reduced ? "auto" : "smooth" });
-    markCurrent(current);
-  }
-  function markCurrent(i) {
-    $$(".g-item").forEach((b, k) => b.classList.toggle("current", k === i));
-    $$("#gDots button").forEach((b, k) => b.classList.toggle("on", k === i));
-  }
-  function wireGallery() {
-    const track = $("#gTrack");
-    const rtl = () => document.documentElement.dir === "rtl";
-    $("#gPrev").addEventListener("click", () => goTo(current + (rtl() ? 1 : -1)));
-    $("#gNext").addEventListener("click", () => goTo(current + (rtl() ? -1 : 1)));
-    let raf = 0;
-    track.addEventListener("scroll", () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const mid = track.getBoundingClientRect().left + track.clientWidth / 2;
-        let best = 0, bd = Infinity;
-        $$(".g-item", track).forEach((el, k) => { const r = el.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bd) { bd = d; best = k; } });
-        current = best; markCurrent(best);
-      });
-    }, { passive: true });
-  }
-
   // ------------------------------------------------------------ modals
   function openModal(id) { const m = $(id); m.hidden = false; document.body.style.overflow = "hidden"; }
   function closeModal(id) { const m = $(id); m.hidden = true; document.body.style.overflow = ""; }
-  function openLightbox(src) { $("#lightboxImg").src = src; openModal("#lightbox"); }
   function wireModals() {
     $("#trailerBtn").addEventListener("click", () => { music.hold(true); openModal("#trailer"); const v = $("#trailerVideo"); v.currentTime = 0; v.play().catch(() => {}); });
     const shut = () => { if ($("#trailer").hidden) return; $("#trailerVideo").pause(); closeModal("#trailer"); music.hold(false); };
     $("#trailerClose").addEventListener("click", shut);
-    $("#lightboxClose").addEventListener("click", () => closeModal("#lightbox"));
-    for (const id of ["#trailer", "#lightbox"]) $(id).addEventListener("click", (e) => { if (e.target === e.currentTarget) id === "#trailer" ? shut() : closeModal(id); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") { shut(); closeModal("#lightbox"); } });
+    $("#trailer").addEventListener("click", (e) => { if (e.target === e.currentTarget) shut(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") shut(); });
   }
 
   // ------------------------------------------------------------ nav & reveal
@@ -375,7 +330,7 @@
   // ------------------------------------------------------------ boot
   function boot() {
     $("#year").textContent = new Date().getFullYear();
-    buildLangMenu(); music.init(); wireGallery(); wireModals(); wireChrome(); wirePlayLinks();
+    buildLangMenu(); music.init(); wireModals(); wireChrome(); wirePlayLinks();
     applyLang(lang, false);
     wireReveal(); wireTilt(); wireModes(); wireModeClips(); swarm(); loadStats();
     // Keep the hero film light: pause it while it is off screen.
