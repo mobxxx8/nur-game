@@ -40,7 +40,7 @@
     document.title = t("meta_title");
     $("#langName").textContent = info.name;
     $$("#langMenu button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.lang === lang)));
-    buildCompare(); buildFaq(); buildRibbon(); buildGallery();
+    buildCompare(); buildFaq(); buildGallery();
     if (window.lucide) lucide.createIcons();
   }
 
@@ -65,35 +65,21 @@
 
   // ------------------------------------------------------------ content blocks
   function buildCompare() {
+    // Each mode: what the free download gives and what the one-time unlock adds.
     const rows = [
-      ["map", "r_levels", t("r_levels_f"), t("r_levels_p")],
-      ["timer", "r_race", t("r_race_f"), t("r_race_p")],
-      ["rocket", "r_rush", t("r_rush_f"), t("r_rush_p")],
-      ["target", "r_breach", t("r_breach_f"), t("r_breach_p")],
-      ["swords", "r_war", t("r_war_f"), t("r_war_p")],
-      ["crown", "r_arena", t("r_arena_f"), t("r_arena_p")],
-      ["users", "r_royale", t("r_royale_f"), t("r_royale_p")],
-      ["ban", "r_ads", true, true],
-      ["wifi-off", "r_offline", true, true],
-      ["shirt", "r_shop", true, true],
+      ["map", "r_levels"], ["timer", "r_race"], ["rocket", "r_rush"], ["target", "r_breach"],
+      ["swords", "r_war"], ["crown", "r_arena"], ["users", "r_royale"],
     ];
-    const cell = (v, full) => v === true
-      ? `<i data-lucide="check-circle-2" class="yes"></i>`
-      : `<i data-lucide="${full ? "star" : "circle-dot"}" class="${full ? "star" : "part"}"></i><span>${v}</span>`;
-    $("#cmpRows").innerHTML = rows.map(([ico, k, f, p], i) =>
-      `<div class="cmp-row" style="transition-delay:${i * 60}ms"><div class="label"><i data-lucide="${ico}"></i><span>${t(k)}</span></div>
-       <div class="cell">${cell(f, false)}</div><div class="cell full">${cell(p, true)}</div></div>`).join("");
+    const list = (suffix, full) => rows.map(([ico, k], i) =>
+      `<li style="--d:${i * 70}ms"><span class="pl-ico"><i data-lucide="${ico}"></i></span><span class="pl-name">${t(k)}</span>` +
+      `<span class="pl-val"><i data-lucide="${full ? "check-circle-2" : "circle-dashed"}"></i>${t(k + suffix)}</span></li>`).join("");
+    $("#planFree").innerHTML = list("_f", false);
+    $("#planFull").innerHTML = list("_p", true);
   }
 
   function buildFaq() {
     $("#faqList").innerHTML = [1, 2, 3, 4, 5, 6].map((n) =>
       `<details class="qa reveal in"><summary><span>${t("q" + n)}</span><span class="pm"><i data-lucide="plus"></i></span></summary><p>${t("a" + n)}</p></details>`).join("");
-  }
-
-  function buildRibbon() {
-    const facts = ["j1_d", "j2_d", "j3_d", "j4_d", "j5_d", "j6_d", "pill_ads", "pill_offline", "pill_free"].map(t);
-    const html = facts.map((f) => `<span>${f}</span>`).join("");
-    $("#ribbon").innerHTML = html + html;
   }
 
   // ------------------------------------------------------------ gallery
@@ -142,8 +128,8 @@
   function closeModal(id) { const m = $(id); m.hidden = true; document.body.style.overflow = ""; }
   function openLightbox(src) { $("#lightboxImg").src = src; openModal("#lightbox"); }
   function wireModals() {
-    $("#trailerBtn").addEventListener("click", () => { openModal("#trailer"); const v = $("#trailerVideo"); v.currentTime = 0; v.play().catch(() => {}); });
-    const shut = () => { $("#trailerVideo").pause(); closeModal("#trailer"); };
+    $("#trailerBtn").addEventListener("click", () => { music.hold(true); openModal("#trailer"); const v = $("#trailerVideo"); v.currentTime = 0; v.play().catch(() => {}); });
+    const shut = () => { if ($("#trailer").hidden) return; $("#trailerVideo").pause(); closeModal("#trailer"); music.hold(false); };
     $("#trailerClose").addEventListener("click", shut);
     $("#lightboxClose").addEventListener("click", () => closeModal("#lightbox"));
     for (const id of ["#trailer", "#lightbox"]) $(id).addEventListener("click", (e) => { if (e.target === e.currentTarget) id === "#trailer" ? shut() : closeModal(id); });
@@ -151,27 +137,45 @@
   }
 
   // ------------------------------------------------------------ nav & reveal
-  function wireNav() {
-    const nav = $("#nav");
-    const onScroll = () => nav.classList.toggle("scrolled", scrollY > 20);
-    addEventListener("scroll", onScroll, { passive: true }); onScroll();
-    $("#burger").addEventListener("click", () => $("#navLinks").classList.toggle("open"));
-    $$("#navLinks a").forEach((a) => a.addEventListener("click", () => $("#navLinks").classList.remove("open")));
-    const links = $$("#navLinks a");
-    const spy = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
-    }), { rootMargin: "-45% 0px -50% 0px" });
-    $$("section[id]").forEach((s) => spy.observe(s));
+  function wireChrome() {
+    // The floating language button tucks away while scrolling down; on phones
+    // a download bar slides up once the hero is gone (hidden at the final CTA).
+    const sticky = $("#stickyCta");
+    let heroIn = true, finalIn = false;
+    const sync = () => {
+      const on = !heroIn && !finalIn;
+      sticky.classList.toggle("show", on); sticky.setAttribute("aria-hidden", String(!on));
+      sticky.querySelector("a").tabIndex = on ? 0 : -1;
+    };
+    new IntersectionObserver(([e]) => { heroIn = e.isIntersecting; sync(); }, { threshold: 0.05 }).observe($("#hero"));
+    new IntersectionObserver(([e]) => { finalIn = e.isIntersecting; sync(); }).observe($("#final"));
+    let last = scrollY;
+    addEventListener("scroll", () => {
+      const y = scrollY;
+      $("#tools").classList.toggle("tuck", y > last && y > 300 && !$("#lang").classList.contains("open"));
+      last = y;
+    }, { passive: true });
+  }
+  function wireModes() {
+    // On phones the six modes are a swipeable strip with dots.
+    const track = $("#modesTrack"), cards = $$(".mode", track), dots = $("#modeDots");
+    dots.innerHTML = cards.map(() => "<i></i>").join("");
+    const mark = () => {
+      const mid = track.getBoundingClientRect().left + track.clientWidth / 2;
+      let best = 0, bd = Infinity;
+      cards.forEach((c, k) => { const r = c.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bd) { bd = d; best = k; } });
+      [...dots.children].forEach((d, k) => d.classList.toggle("on", k === best));
+    };
+    track.addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true }); mark();
   }
   function wireReveal() {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add("in");
-      if (e.target.classList.contains("compare")) e.target.classList.add("in");
       e.target.querySelectorAll?.(".count").forEach(countUp);
       io.unobserve(e.target);
     }), { threshold: 0.14 });
-    $$(".reveal, .stats").forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; io.observe(el); });
+    $$(".reveal").forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 90}ms`; io.observe(el); });
   }
   function countUp(el) {
     const end = +el.dataset.count || 0;
@@ -191,16 +195,6 @@
       el.addEventListener("pointerleave", () => { el.style.transform = ""; });
     });
   }
-  function wireRoad() {
-    const road = $("#road");
-    const bar = document.createElement("div"); bar.className = "progress"; road.prepend(bar);
-    const update = () => {
-      const r = road.getBoundingClientRect(); const k = (innerHeight * 0.6 - r.top) / r.height;
-      bar.style.setProperty("--p", `${Math.max(0, Math.min(1, k)) * 100}%`);
-    };
-    addEventListener("scroll", update, { passive: true }); update();
-  }
-
   // ------------------------------------------------------------ Play links & stats
   function toast(msg) { const el = $("#toast"); el.textContent = msg; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 2200); }
   function wirePlayLinks() {
@@ -230,6 +224,39 @@
       if (s.installs) { $("#statInstalls").hidden = false; $("#installsValue").textContent = s.installs; }
     } catch { /* the static preview has no API */ }
   }
+
+  // ------------------------------------------------------------ music
+  // The game's own menu theme. Browsers only allow sound after a tap, so it
+  // starts on the visitor's first tap or key press (unless they turned it off
+  // before), fades in softly, rests while the tab is hidden or the trailer plays.
+  const music = {
+    el: null, want: false, fade: 0, VOL: 0.32,
+    init() {
+      this.el = $("#music");
+      this.want = store.get("nur_music") !== "off";
+      const btn = $("#soundBtn");
+      btn.addEventListener("click", (e) => { e.stopPropagation(); this.want = !this.el.paused ? false : true; store.set("nur_music", this.want ? "on" : "off"); this.want ? this.play() : this.stop(); });
+      const first = (e) => {
+        if (e.target.closest && e.target.closest("#soundBtn")) return;
+        removeEventListener("pointerdown", first, true); removeEventListener("keydown", first, true);
+        if (this.want) this.play();
+      };
+      addEventListener("pointerdown", first, true); addEventListener("keydown", first, true);
+      document.addEventListener("visibilitychange", () => { if (document.hidden) this.el.pause(); else if (this.want && !this.held) this.play(); });
+      this.el.addEventListener("play", () => this.mark(true));
+      this.el.addEventListener("pause", () => this.mark(false));
+    },
+    mark(on) { const b = $("#soundBtn"); b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); },
+    ramp(to, done) {
+      cancelAnimationFrame(this.fade);
+      const from = this.el.volume, t0 = performance.now(), dur = to > from ? 2200 : 500;
+      const step = (now) => { const k = Math.min(1, (now - t0) / dur); this.el.volume = from + (to - from) * k; if (k < 1) this.fade = requestAnimationFrame(step); else if (done) done(); };
+      this.fade = requestAnimationFrame(step);
+    },
+    play() { if (!this.el.paused) return; this.el.volume = 0; this.el.play().then(() => this.ramp(this.VOL)).catch(() => {}); },
+    stop() { this.ramp(0, () => this.el.pause()); },
+    hold(on) { this.held = on; if (on) this.el.pause(); else if (this.want) this.play(); },
+  };
 
   // ------------------------------------------------------------ the living swarm
   // Nur (gold) leads a stream of pale rivals through the water; on a phone
@@ -311,9 +338,9 @@
   // ------------------------------------------------------------ boot
   function boot() {
     $("#year").textContent = new Date().getFullYear();
-    buildLangMenu(); wireGallery(); wireModals(); wireNav(); wirePlayLinks();
+    buildLangMenu(); music.init(); wireGallery(); wireModals(); wireChrome(); wirePlayLinks();
     applyLang(lang, false);
-    wireReveal(); wireTilt(); wireRoad(); swarm(); loadStats();
+    wireReveal(); wireTilt(); wireModes(); swarm(); loadStats();
     // Keep the hero film light: pause it while it is off screen.
     const v = $("#heroVideo");
     if (reduced) v.pause();

@@ -40,5 +40,8 @@ Without storage the site works normally and simply hides the live numbers.
 | `privacy/index.html` | Privacy policy (English + Arabic) |
 
 Assets are generated from the game by `D:\NUR\tools\make_website_assets.py`.
+Background music: the game's menu theme, "In This Moment" by Scott Buckley
+(CC BY 4.0, credited in the footer); it starts on the visitor's first tap and
+the speaker button turns it off (remembered per browser).
 Icons: [Lucide](https://lucide.dev) (ISC). Fonts: Poppins, Cairo, Noto Sans SC
 (Google Fonts, OFL). Google Play is a trademark of Google LLC.
