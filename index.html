@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta_title">NUR: Journey of Light — race millions to the spark of life</title>
+  <meta name="description" data-i18n-content="meta_desc" content="A cinematic race through the real human body. Swim as Nur, beat millions of rivals and reach the egg. Free to try on Android, no ads, plays offline.">
+  <meta name="theme-color" content="#1a0816">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NUR: Journey of Light">
+  <meta property="og:description" content="One spark. Millions of rivals. Only one reaches the light. A cinematic race through the real human body, free to try on Android.">
+  <meta property="og:image" content="/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"VideoGame","name":"NUR: Journey of Light","applicationCategory":"Game","operatingSystem":"Android",
+   "genre":["Racing","Action","Educational"],"inLanguage":["en","ar","de","es","fr","pt-BR","zh-CN"],
+   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+   "url":"https://play.google.com/store/apps/details?id=com.nur.journeyoflight","image":"/assets/og.jpg"}
+  </script>
+</head>
+<body>
+  <!-- Living background: Nur and the swarm swim behind everything. -->
+  <canvas id="swarm" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="NUR">
+      <img src="/assets/icon-192.png" alt="" width="40" height="40">
+      <span>NUR</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#features" data-i18n="nav_features">Features</a>
+      <a href="#modes" data-i18n="nav_modes">Modes</a>
+      <a href="#journey" data-i18n="nav_journey">The journey</a>
+      <a href="#compare" data-i18n="nav_compare">Free vs full</a>
+      <a href="#gallery" data-i18n="nav_gallery">Gallery</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    </nav>
+    <div class="nav-tools">
+      <div class="lang" id="lang">
+        <button class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+          <i data-lucide="languages"></i><span id="langName">English</span><i data-lucide="chevron-down" class="chev"></i>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox"></ul>
+      </div>
+      <a class="btn btn-gold btn-sm play-link" href="#" data-i18n="nav_get">Get the game</a>
+      <button class="burger" id="burger" aria-label="Menu"><i data-lucide="menu"></i></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"><img src="/assets/worlds/genesis.webp" alt=""></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow reveal"><i data-lucide="sparkles"></i><span data-i18n="hero_eyebrow">A cinematic race through the human body</span></p>
+          <h1 class="hero-title">
+            <span class="line l1" data-i18n="hero_title_1">One spark.</span>
+            <span class="line l2" data-i18n="hero_title_2">Millions of rivals.</span>
+            <span class="line l3 shimmer" data-i18n="hero_title_3">Only one reaches the light.</span>
+          </h1>
+          <p class="hero-sub reveal" data-i18n="hero_sub">Swim as Nur…</p>
+          <div class="hero-ctas reveal">
+            <a class="btn btn-gold btn-lg play-link breathe" href="#">
+              <svg class="gp" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6v18.8c0 .5.5.8.9.6l16-9.4c.4-.2.4-.9 0-1.1L4.9 2c-.4-.2-.9.1-.9.6z" fill="currentColor"/></svg>
+              <span data-i18n="cta_play">Get it on Google Play</span>
+            </a>
+            <button class="btn btn-ghost btn-lg" id="trailerBtn"><i data-lucide="play-circle"></i><span data-i18n="cta_trailer">Watch the trailer</span></button>
+          </div>
+          <ul class="pills reveal">
+            <li><i data-lucide="gift"></i><span data-i18n="pill_free">Free to try</span></li>
+            <li><i data-lucide="ban"></i><span data-i18n="pill_ads">No ads</span></li>
+            <li><i data-lucide="wifi-off"></i><span data-i18n="pill_offline">Plays offline</span></li>
+            <li><i data-lucide="globe"></i><span data-i18n="pill_langs">7 languages</span></li>
+          </ul>
+        </div>
+        <div class="hero-stage reveal">
+          <div class="egg-wrap" aria-hidden="true">
+            <div class="egg-glow"></div>
+            <img class="egg" src="/assets/art/egg.webp" alt="">
+            <div class="orbit o1"></div><div class="orbit o2"></div>
+          </div>
+          <div class="device tilt">
+            <div class="device-screen">
+              <video id="heroVideo" src="/assets/promo.mp4" poster="/assets/promo-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+            </div>
+            <div class="device-shine"></div>
+          </div>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#stats" aria-label="Scroll"><span></span></a>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats" id="stats">
+      <div class="stat live" id="statVisitors" hidden><i data-lucide="eye"></i><b class="count" data-count="0">0</b><span data-i18n="stat_visitors">Visitors</span></div>
+      <div class="stat live" id="statDownloads" hidden><i data-lucide="download"></i><b class="count" data-count="0">0</b><span data-i18n="stat_downloads">Sent to Google Play</span></div>
+      <div class="stat live" id="statInstalls" hidden><i data-lucide="smartphone"></i><b id="installsValue">0</b><span data-i18n="stat_installs">Installs on Google Play</span></div>
+      <div class="stat"><i data-lucide="map"></i><b class="count" data-count="20">0</b><span data-i18n="stat_levels">Levels</span></div>
+      <div class="stat"><i data-lucide="gamepad-2"></i><b class="count" data-count="6">0</b><span data-i18n="stat_modes">Game modes</span></div>
+      <div class="stat"><i data-lucide="languages"></i><b class="count" data-count="7">0</b><span data-i18n="pill_langs">7 languages</span></div>
+      <div class="stat"><i data-lucide="shield-check"></i><b>0</b><span data-i18n="stat_ads">Ads</span></div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="feat_kicker">Why players can't put it down</p>
+        <h2 data-i18n="feat_title">Small hero. Epic journey.</h2>
+      </header>
+      <div class="features">
+        <article class="feature reveal tilt" style="--c: var(--aqua)"><div class="f-ico"><i data-lucide="microscope"></i></div><h3 data-i18n="f1_t"></h3><p data-i18n="f1_d"></p></article>
+        <article class="feature reveal tilt" style="--c: var(--gold)"><div class="f-ico"><i data-lucide="zap"></i></div><h3 data-i18n="f2_t"></h3><p data-i18n="f2_d"></p></article>
+        <article class="feature reveal tilt" style="--c: var(--coral)"><div class="f-ico"><i data-lucide="trophy"></i></div><h3 data-i18n="f3_t"></h3><p data-i18n="f3_d"></p></article>
+        <article class="feature reveal tilt" style="--c: var(--lavender)"><div class="f-ico"><i data-lucide="layers"></i></div><h3 data-i18n="f4_t"></h3><p data-i18n="f4_d"></p></article>
+        <article class="feature reveal tilt" style="--c: var(--mint)"><div class="f-ico"><i data-lucide="sun"></i></div><h3 data-i18n="f5_t"></h3><p data-i18n="f5_d"></p></article>
+        <article class="feature reveal tilt" style="--c: var(--gold)"><div class="f-ico"><i data-lucide="heart-handshake"></i></div><h3 data-i18n="f6_t"></h3><p data-i18n="f6_d"></p></article>
+      </div>
+    </section>
+
+    <!-- FACT RIBBON -->
+    <div class="ribbon" aria-hidden="true"><div class="ribbon-track" id="ribbon"></div></div>
+
+    <!-- MODES -->
+    <section class="section" id="modes">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="modes_kicker">Six ways to play</p>
+        <h2 data-i18n="modes_title">Pick your battle</h2>
+      </header>
+      <div class="modes">
+        <article class="mode reveal tilt big"><img src="/assets/modes/card_levels.webp" alt="" loading="lazy"><div class="mode-body"><span class="tag" style="--c: var(--gold)"><i data-lucide="map"></i>20</span><h3 data-i18n="m_journey_t"></h3><p data-i18n="m_journey_d"></p></div></article>
+        <article class="mode reveal tilt"><img src="/assets/modes/card_royale.webp" alt="" loading="lazy"><div class="mode-body"><span class="tag" style="--c: var(--coral)"><i data-lucide="users"></i>200</span><h3 data-i18n="m_royale_t"></h3><p data-i18n="m_royale_d"></p></div></article>
+        <article class="mode reveal tilt"><img src="/assets/modes/card_breach.webp" alt="" loading="lazy"><div class="mode-body"><span class="tag" style="--c: var(--aqua)"><i data-lucide="target"></i>12</span><h3 data-i18n="m_breach_t"></h3><p data-i18n="m_breach_d"></p></div></article>
+        <article class="mode reveal tilt"><img src="/assets/modes/card_war.webp" alt="" loading="lazy"><div class="mode-body"><span class="tag" style="--c: var(--lavender)"><i data-lucide="swords"></i>10</span><h3 data-i18n="m_war_t"></h3><p data-i18n="m_war_d"></p></div></article>
+        <article class="mode reveal tilt"><img src="/assets/modes/card_rush.webp" alt="" loading="lazy"><div class="mode-body"><span class="tag" style="--c: var(--mint)"><i data-lucide="rocket"></i>60 km</span><h3 data-i18n="m_rush_t"></h3><p data-i18n="m_rush_d"></p></div></article>
+        <article class="mode reveal tilt"><img src="/assets/modes/card_arena.webp" alt="" loading="lazy"><div class="mode-body"><span class="tag" style="--c: var(--gold)"><i data-lucide="crown"></i>10</span><h3 data-i18n="m_arena_t"></h3><p data-i18n="m_arena_d"></p></div></article>
+      </div>
+    </section>
+
+    <!-- JOURNEY -->
+    <section class="section journey" id="journey">
+      <div class="journey-bg" aria-hidden="true"><img src="/assets/worlds/ampulla.webp" alt=""></div>
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="journey_kicker">The real road to life</p>
+        <h2 data-i18n="journey_title">Six organs. One destination.</h2>
+      </header>
+      <ol class="road" id="road">
+        <li class="stop reveal" style="--c:#ff8a95"><span class="km">0 km</span><div class="node"><i data-lucide="flag"></i></div><div class="stop-card"><h3 data-i18n="j1_t"></h3><p data-i18n="j1_d"></p></div></li>
+        <li class="stop reveal" style="--c:#e8e266"><span class="km">6 km</span><div class="node"><i data-lucide="flask-conical"></i></div><div class="stop-card"><h3 data-i18n="j2_t"></h3><p data-i18n="j2_d"></p></div></li>
+        <li class="stop reveal" style="--c:#f4d6e0"><span class="km">14 km</span><div class="node"><i data-lucide="waves"></i></div><div class="stop-card"><h3 data-i18n="j3_t"></h3><p data-i18n="j3_d"></p></div></li>
+        <li class="stop reveal" style="--c:#ff5a72"><span class="km">22 km</span><div class="node"><i data-lucide="shield-alert"></i></div><div class="stop-card"><h3 data-i18n="j4_t"></h3><p data-i18n="j4_d"></p></div></li>
+        <li class="stop reveal" style="--c:#c9a6ff"><span class="km">34 km</span><div class="node"><i data-lucide="door-open"></i></div><div class="stop-card"><h3 data-i18n="j5_t"></h3><p data-i18n="j5_d"></p></div></li>
+        <li class="stop reveal goal" style="--c:#ffd166"><span class="km">60 km</span><div class="node"><i data-lucide="sparkles"></i></div><div class="stop-card"><h3 data-i18n="j6_t"></h3><p data-i18n="j6_d"></p></div></li>
+      </ol>
+      <svg class="road-line" id="roadLine" aria-hidden="true" preserveAspectRatio="none"><path id="roadPath"/></svg>
+    </section>
+
+    <!-- FREE VS FULL -->
+    <section class="section" id="compare">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="compare_kicker">Try it free. Love it? Keep it.</p>
+        <h2 data-i18n="compare_title">Free vs full game</h2>
+      </header>
+      <div class="compare reveal">
+        <div class="cmp-head">
+          <span></span>
+          <div class="cmp-col free"><i data-lucide="gift"></i><b data-i18n="col_free">Free</b></div>
+          <div class="cmp-col full"><span class="ribbon-tag" data-i18n="col_full_tag">One-time purchase</span><i data-lucide="crown"></i><b data-i18n="col_full">Full game</b></div>
+        </div>
+        <div class="cmp-rows" id="cmpRows"></div>
+        <div class="price">
+          <p class="price-line"><i data-lucide="badge-check"></i><span data-i18n="price_line"></span></p>
+          <p class="price-keep" data-i18n="price_keep"></p>
+          <a class="btn btn-gold btn-lg play-link breathe" href="#"><svg class="gp" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6v18.8c0 .5.5.8.9.6l16-9.4c.4-.2.4-.9 0-1.1L4.9 2c-.4-.2-.9.1-.9.6z" fill="currentColor"/></svg><span data-i18n="price_cta"></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section" id="gallery">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="gallery_kicker">See it for yourself</p>
+        <h2 data-i18n="gallery_title">Screenshots</h2>
+      </header>
+      <div class="gallery reveal">
+        <button class="g-arrow prev" id="gPrev" data-i18n-aria="prev"><i data-lucide="chevron-left"></i></button>
+        <div class="g-track" id="gTrack"></div>
+        <button class="g-arrow next" id="gNext" data-i18n-aria="next"><i data-lucide="chevron-right"></i></button>
+      </div>
+      <div class="g-dots" id="gDots"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <header class="sec-head reveal">
+        <p class="kicker" data-i18n="faq_kicker">Questions?</p>
+        <h2 data-i18n="faq_title">Good to know</h2>
+      </header>
+      <div class="faq" id="faqList"></div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final">
+      <div class="final-bg" aria-hidden="true"><img src="/assets/worlds/life.webp" alt=""></div>
+      <img class="final-icon reveal" src="/assets/icon-512.png" alt="NUR" width="140" height="140">
+      <h2 class="reveal" data-i18n="final_title">Your journey starts with one spark.</h2>
+      <p class="reveal" data-i18n="final_sub"></p>
+      <a class="btn btn-gold btn-xl play-link breathe reveal" href="#"><svg class="gp" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6v18.8c0 .5.5.8.9.6l16-9.4c.4-.2.4-.9 0-1.1L4.9 2c-.4-.2-.9.1-.9.6z" fill="currentColor"/></svg><span data-i18n="cta_play">Get it on Google Play</span></a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="foot-brand"><img src="/assets/icon-192.png" alt="" width="32" height="32"><b>NUR: Journey of Light</b></div>
+    <nav>
+      <a href="/privacy" data-i18n="foot_privacy">Privacy policy</a>
+      <a href="mailto:mobxxx8@gmail.com"><i data-lucide="mail"></i><span data-i18n="foot_contact">Contact</span></a>
+    </nav>
+    <p class="foot-small"><span data-i18n="foot_made">Made with love and Godot.</span> © <span id="year">2026</span> NUR. <span data-i18n="foot_rights">All rights reserved.</span> Google Play is a trademark of Google LLC.</p>
+  </footer>
+
+  <!-- Trailer -->
+  <div class="modal" id="trailer" hidden>
+    <div class="modal-box">
+      <button class="modal-close" id="trailerClose" data-i18n-aria="close"><i data-lucide="x"></i></button>
+      <video id="trailerVideo" src="/assets/promo.mp4" poster="/assets/promo-poster.jpg" controls playsinline preload="none"></video>
+    </div>
+  </div>
+  <!-- Screenshot lightbox -->
+  <div class="modal" id="lightbox" hidden>
+    <div class="modal-box wide">
+      <button class="modal-close" id="lightboxClose" data-i18n-aria="close"><i data-lucide="x"></i></button>
+      <img id="lightboxImg" alt="">
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" defer></script>
+  <script src="/js/i18n.js" defer></script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
